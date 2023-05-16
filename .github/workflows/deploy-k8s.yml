@@ -43,9 +43,9 @@ jobs:
         name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
+          client-id: "6f248d06-56c7-4dc2-8e2d-aa1358874d95"
+          tenant-id: "3b50229c-cd78-4588-9bcf-97b7629e2f0f"
+          subscription-id: "b0dd786a-9e38-4c7e-95fb-faebd96083e4"
       # -
       #   name: Build and push
       #   uses: docker/build-push-action@v4
