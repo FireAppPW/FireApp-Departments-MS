@@ -66,6 +66,12 @@ jobs:
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
+      - name: Update manifest file with env
+        run: |
+          sed -i "s/DATASOURCE_PASSWORD_ENV/${{ secrets.DATASOURCE_PASSWORD }}/g" k8s/department-service-deployment.yaml
+          sed -i "s/DATASOURCE_URL_ENV/${{ secrets.DATASOURCE_URL }}/g" k8s/department-service-deployment.yaml
+          sed -i "s/DATASOURCE_USERNAME_ENV/${{ secrets.DATASOURCE_USERNAME }}/g" k8s/department-service-deployment.yaml
+          sed -i "s/REPOSITORY_PREFIX_ENV/${{ secrets.REPOSITORY_PREFIX }}/g" k8s/department-service-deployment.yaml
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4

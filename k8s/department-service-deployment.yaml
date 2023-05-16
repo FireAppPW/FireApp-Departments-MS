@@ -18,12 +18,16 @@ spec:
         app: department-service
     spec:
       containers:
-        - image: ${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:lastest
+        - image: REPOSITORY_PREFIX_ENV.azurecr.io/fireapp-department-ms:lastest
           name: department-service
           imagePullPolicy: Always
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: kubernetes
+            - name: DATASOURCE_PASSWORD
+              value: DATASOURCE_PASSWORD_ENV
+            - name: DATASOURCE_URL
+              value: DATASOURCE_URL_ENV
+            - name: DATASOURCE_USERNAME
+              value: DATASOURCE_USERNAME_ENV
           ports:
             - containerPort: 8080
       restartPolicy: Always
