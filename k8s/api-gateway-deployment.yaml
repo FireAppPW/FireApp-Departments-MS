@@ -7,7 +7,7 @@ metadata:
   name: api-gateway
   namespace: spring-petclinic
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api-gateway
@@ -18,7 +18,7 @@ spec:
         app: api-gateway
     spec:
       containers:
-        - image: ${REPOSITORY_PREFIX}/spring-petclinic-cloud-api-gateway:latest
+        - image: ersms/spring-petclinic-cloud-api-gateway:latest
           name: api-gateway
           imagePullPolicy: Always
           livenessProbe:
