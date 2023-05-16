@@ -25,6 +25,9 @@ jobs:
     env:
       REPOSITORY_PREFIX: ${{ secrets.REPOSITORY_PREFIX }}
       AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
+      DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+      DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+      DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
 
     steps:
       -
