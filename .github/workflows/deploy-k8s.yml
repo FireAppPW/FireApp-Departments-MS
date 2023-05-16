@@ -24,7 +24,6 @@ jobs:
     env:
       REPOSITORY_PREFIX: ${{ secrets.REPOSITORY_PREFIX }}
       AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
-      DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
 
     steps:
       -
@@ -41,12 +40,6 @@ jobs:
           username: ${{ secrets.REPOSITORY_USERNAME }}
           password: ${{ secrets.REPOSITORY_PASSWORD }}
       -
-        name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
-          push: true
-      -
         name: Azure Login
         uses: azure/login@v1
         with:
@@ -54,12 +47,35 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
       -
-        name: Azure CLI
-        uses: azure/CLI@v1
+        name: Build and push
+        uses: docker/build-push-action@v4
         with:
-          azcliversion: latest
-          inlineScript: |
-            kubectl apply -f k8s/namespace.yaml
-            kubectl apply -f k8s/department-service.yaml
+          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}
+          push: true
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: '${{ $secrets.AZURE_RESOUCE_GROUP }}' 
+          cluster-name: '${{ secrets.AZURE_CLUSTER_NAME }}'
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+      - name: Deploy to AKS
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             ./k8s/department-service.yaml
+          images: '${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}'
+          pull-images: false 
+      # -
+      #   name: Azure CLI
+      #   uses: azure/CLI@v1
+      #   with:
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       kubectl apply -f k8s/namespace.yaml
+      #       kubectl apply -f k8s/department-service.yaml
 
-            
