@@ -50,12 +50,12 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
-      # -
-      #   name: Build and push
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}
-      #     push: true
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}
+          push: true
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
@@ -72,6 +72,7 @@ jobs:
         with:
           namespace: 'fireapp'
           manifests: |
+            k8s/namespace.yaml
             k8s/department-service.yaml
           images: '${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}'
           pull-images: false 
