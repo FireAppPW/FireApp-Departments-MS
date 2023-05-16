@@ -18,7 +18,7 @@ spec:
         app: department-service
     spec:
       containers:
-        - image: ersms.azurecr.io/fireapp-department-ms:lastest
+        - image: ${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:lastest
           name: department-service
           imagePullPolicy: Always
           env:
