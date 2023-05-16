@@ -84,8 +84,8 @@ jobs:
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
         with:
-          namespace: 'spring-petclinic'
-          name: 'api-gateway'
+          namespace: fireapp
+          name: department-service
           manifests: |
             k8s/namespace.yaml
             k8s/init-services/department-service.yaml
