@@ -76,7 +76,7 @@ jobs:
             k8s/namespace.yaml
             k8s/init-services/department-service.yaml
             k8s/department-service-deployment.yaml
-          images: 'ersms.azurecr.io/fireapp-department-ms:latest'
+          images: ${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
           pull-images: false 
       # -
       #   name: Azure CLI
