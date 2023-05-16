@@ -16,6 +16,7 @@ on:
 permissions:
   contents: read
   id-token: write
+  actions: read
 
 jobs:
   build-test:
@@ -43,21 +44,21 @@ jobs:
         name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: "6f248d06-56c7-4dc2-8e2d-aa1358874d95"
-          tenant-id: "3b50229c-cd78-4588-9bcf-97b7629e2f0f"
-          subscription-id: "b0dd786a-9e38-4c7e-95fb-faebd96083e4"
-      -
-        name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}
-          push: true
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
+      # -
+      #   name: Build and push
+      #   uses: docker/build-push-action@v4
+      #   with:
+      #     tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}
+      #     push: true
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
         with:
-          resource-group: 'ersms-k8s'
-          cluster-name: 'ersms-cluster'
+          resource-group: ${{ secrets.AZURE_RESOUCE_GROUP }}
+          cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
           admin: true
       - name: Setup kubectl
         id: install-kubectl
@@ -68,7 +69,7 @@ jobs:
         with:
           namespace: 'fireapp'
           manifests: |
-            k8s/department-service.yaml
+            ${{ github.workspace }}/k8s/department-service.yaml
           images: '${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}'
           pull-images: false 
       # -
