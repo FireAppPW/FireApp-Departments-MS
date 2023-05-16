@@ -53,12 +53,12 @@ jobs:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
-      # -
-      #   name: Build and push
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
-      #     push: true
+      -
+        name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
+          push: true
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
@@ -87,10 +87,10 @@ jobs:
           namespace: 'spring-petclinic'
           name: 'api-gateway'
           manifests: |
-            k8s/01-namespace.yaml
-            k8s/init-services/05-api-gateway-service.yaml
-            k8s/api-gateway-deployment.yaml
-          images: ${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/spring-petclinic-api-gateway:latest
+            k8s/namespace.yaml
+            k8s/init-services/department-service.yaml
+            k8s/department-service-deployment.yaml
+          images: ${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
           pull-images: false 
       # -
       #   name: Azure CLI
