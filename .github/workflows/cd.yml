@@ -3,8 +3,6 @@ name: Deploy project
 on:
   push:
     branches: [ "main" ]
-  pull_request: # TODO: remove this section
-    branches: [ "main" ]
 
 jobs:
   Deploy:
