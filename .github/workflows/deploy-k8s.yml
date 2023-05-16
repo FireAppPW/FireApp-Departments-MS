@@ -69,7 +69,7 @@ jobs:
         with:
           namespace: 'fireapp'
           manifests: |
-            ${{ github.workspace }}/k8s/department-service.yaml
+            ../k8s/department-service.yaml
           images: '${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}'
           pull-images: false 
       # -
