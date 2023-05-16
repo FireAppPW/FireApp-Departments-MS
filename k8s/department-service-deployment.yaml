@@ -18,7 +18,7 @@ spec:
         app: department-service
     spec:
       containers:
-        - image: ${REPOSITORY_PREFIX}/fireapp-department-ms:${{ github.sha }}
+        - image: ${REPOSITORY_PREFIX}/fireapp-department-ms:lastest
           name: department-service
           imagePullPolicy: Always
           env:

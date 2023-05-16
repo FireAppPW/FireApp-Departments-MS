@@ -54,7 +54,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v4
         with:
-          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}
+          tags: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:lastest
           push: true
       - name: Set AKS context
         id: set-context
@@ -75,7 +75,7 @@ jobs:
             k8s/namespace.yaml
             k8s/init-services/department-service.yaml
             k8s/department-service-deployment.yaml
-          images: '${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:${{ github.sha }}'
+          images: '${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:lastest'
           pull-images: false 
       # -
       #   name: Azure CLI
