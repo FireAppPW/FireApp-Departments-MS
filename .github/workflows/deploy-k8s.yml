@@ -58,6 +58,7 @@ jobs:
         with:
           resource-group: ${{ secrets.AZURE_RESOUCE_GROUP }}
           cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
+          admin: true
       - name: Setup kubectl
         id: install-kubectl
         uses: azure/setup-kubectl@v3
