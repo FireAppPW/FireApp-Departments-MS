@@ -3,7 +3,7 @@ name: Deploy project
 on:
   push:
     branches: [ "main" ]
-  pull_request:
+  pull_request: # TODO: remove this section
     branches: [ "main" ]
 
 jobs:
@@ -30,15 +30,15 @@ jobs:
           push: true
 #          platforms: linux/arm64/v8
           tags: giangh14cqt/fireapp-be-department:latest
-#      -
-#        name: Trigger deployment
-#        uses: appleboy/ssh-action@v0.1.10
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          password: ${{ secrets.PASSWORD }}
-#          script: |
-#            sudo docker pull giangh14cqt/bookaholic-backend:latest
-#            sudo docker stop bookaholic-backend
-#            sudo docker rm bookaholic-backend
-#            sudo docker run -d --name bookaholic-backend --network host --env-file .env giangh14cqt/bookaholic-backend:latest
+      -
+        name: Trigger deployment
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            sudo docker pull giangh14cqt/fireapp-be-department:latest
+            sudo docker stop fireapp-be-department
+            sudo docker rm fireapp-be-department
+            sudo docker run -d --name fireapp-be-department --network host --env-file .department_env giangh14cqt/fireapp-be-department:latest
