@@ -72,9 +72,9 @@ jobs:
           ESCAPED_DATASOURCE_USERNAME=$(echo $DATASOURCE_USERNAME | sed 's/\//\\\//g')
           ESCAPED_DATASOURCE_PASSWORD=$(echo $DATASOURCE_PASSWORD | sed 's/\//\\\//g')
           ESCAPED_REPOSITORY_PREFIX=$(echo $REPOSITORY_PREFIX | sed 's/\//\\\//g')
-          sed -i "s/DATASOURCE_URL_ENV/$ESCAPED_DATASOURCE_URL/g" k8s/department-service-deployment.yaml
-          sed -i "s/DATASOURCE_USERNAME_ENV/$ESCAPED_DATASOURCE_USERNAME/g" k8s/department-service-deployment.yaml
-          sed -i "s/DATASOURCE_PASSWORD_ENV/$ESCAPED_DATASOURCE_PASSWORD/g" k8s/department-service-deployment.yaml
+          sed -i "s/DATASOURCE_URL_ENV/"$ESCAPED_DATASOURCE_URL"/g" ./k8s/department-service-deployment.yaml
+          sed -i "s/DATASOURCE_USERNAME_ENV/"$ESCAPED_DATASOURCE_USERNAME"/g" k8s/department-service-deployment.yaml
+          sed -i "s/DATASOURCE_PASSWORD_ENV/"$ESCAPED_DATASOURCE_PASSWORD"/g" k8s/department-service-deployment.yaml
           sed -i "s/REPOSITORY_PREFIX_ENV/$ESCAPED_REPOSITORY_PREFIX/g" k8s/department-service-deployment.yaml
       - name: Deploy to AKS
         id: deploy-aks
