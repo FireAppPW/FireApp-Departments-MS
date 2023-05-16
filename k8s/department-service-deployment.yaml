@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: department-service
+  name: department-service
+  namespace: fireapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: department-service
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: department-service
+    spec:
+      containers:
+        - image: ${REPOSITORY_PREFIX}/fireapp-department-ms:${{ github.sha }}
+          name: department-service
+          imagePullPolicy: Always
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kubernetes
+          ports:
+            - containerPort: 8080
+      restartPolicy: Always
+status: {}
