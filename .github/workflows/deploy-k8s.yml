@@ -59,8 +59,7 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-            az account set --subscription ${{ env.AZURE_SUBSCRIPTION }}
-            az aks get-credentials --resource-group fireapp-rg --name fireapp-aks
-            kubectl apply -f k8s/deployment.yaml
-            kubectl apply -f k8s/service.yaml
-            kubectl apply -f k8s/ingress.yaml
+            kubectl apply -f k8s/namespace.yaml
+            kubectl apply -f k8s/department-service.yaml
+
+            
