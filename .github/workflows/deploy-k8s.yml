@@ -76,6 +76,7 @@ jobs:
           sed -i "s/DATASOURCE_USERNAME_ENV/"$ESCAPED_DATASOURCE_USERNAME"/g" k8s/department-service-deployment.yaml
           sed -i "s/DATASOURCE_PASSWORD_ENV/"$ESCAPED_DATASOURCE_PASSWORD"/g" k8s/department-service-deployment.yaml
           sed -i "s/REPOSITORY_PREFIX_ENV/$ESCAPED_REPOSITORY_PREFIX/g" k8s/department-service-deployment.yaml
+          cat k8s/department-service-deployment.yaml
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
