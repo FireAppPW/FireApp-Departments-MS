@@ -18,7 +18,7 @@ spec:
         app: api-gateway
     spec:
       containers:
-        - image: ersms/spring-petclinic-cloud-api-gateway:latest
+        - image: ersms.azurecr.io/spring-petclinic-cloud-api-gateway:latest
           name: api-gateway
           imagePullPolicy: Always
           livenessProbe:
