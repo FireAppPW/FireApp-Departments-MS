@@ -25,9 +25,14 @@ jobs:
     env:
       REPOSITORY_PREFIX: ${{ secrets.REPOSITORY_PREFIX }}
       AZURE_SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
+      AZURE_RESOUCE_GROUP: ${{ secrets.AZURE_RESOUCE_GROUP }}
       DATASOURCE_URL: ${{ secrets.AZURE_DATASOURCE_URL }}
       DATASOURCE_USERNAME: ${{ secrets.AZURE_DATASOURCE_USERNAME }}
       DATASOURCE_PASSWORD: ${{ secrets.AZURE_DATASOURCE_PASSWORD }}
+      REPOSITORY_USERNAME: ${{ secrets.REPOSITORY_USERNAME }}
+      REPOSITORY_PASSWORD: ${{ secrets.REPOSITORY_PASSWORD }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
     steps:
       -
@@ -44,15 +49,15 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REPOSITORY_PREFIX }}.azurecr.io
-          username: ${{ secrets.REPOSITORY_USERNAME }}
-          password: ${{ secrets.REPOSITORY_PASSWORD }}
+          username: ${{ env.REPOSITORY_USERNAME }}
+          password: ${{ env.REPOSITORY_PASSWORD }}
       -
         name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION }}
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION }}
       -
         name: Build and push
         uses: docker/build-push-action@v4
@@ -63,8 +68,8 @@ jobs:
         id: set-context
         uses: azure/aks-set-context@v3
         with:
-          resource-group: ${{ secrets.AZURE_RESOUCE_GROUP }}
-          cluster-name: ${{ secrets.AZURE_CLUSTER_NAME }}
+          resource-group: ${{ env.AZURE_RESOUCE_GROUP }}
+          cluster-name: ${{ env.AZURE_CLUSTER_NAME }}
           admin: true
       - name: Setup kubectl
         id: install-kubectl
@@ -90,14 +95,7 @@ jobs:
             k8s/namespace.yaml
             k8s/init-services/department-service.yaml
             k8s/department-service-deployment.yaml
-          images: ${{ secrets.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
+          images: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
           pull-images: false 
-      # -
-      #   name: Azure CLI
-      #   uses: azure/CLI@v1
-      #   with:
-      #     azcliversion: latest
-      #     inlineScript: |
-      #       kubectl apply -f k8s/namespace.yaml
-      #       kubectl apply -f k8s/department-service.yaml
+
 
