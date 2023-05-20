@@ -33,6 +33,7 @@ jobs:
       REPOSITORY_PASSWORD: ${{ secrets.REPOSITORY_PASSWORD }}
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_CLUSTER_NAME: ${{ secrets.AZURE_CLUSTER_NAME }}
 
     steps:
       -
@@ -97,5 +98,3 @@ jobs:
             k8s/department-service-deployment.yaml
           images: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
           pull-images: false 
-
-
