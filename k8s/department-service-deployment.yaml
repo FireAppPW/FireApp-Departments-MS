@@ -2,53 +2,55 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: department-service
-  name: department-service
-  namespace: fireapp
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: department-service
-  strategy: {}
-  template:
-    metadata:
-      labels:
+    labels:
         app: department-service
-    spec:
-      containers:
-        - image: REPOSITORY_PREFIX_ENV.azurecr.io/fireapp-department-ms:lastest
-          name: department-service
-          imagePullPolicy: Always
-          livenessProbe:
-            httpGet:
-              port: 8080
-              path: /actuator/health/liveness
-            initialDelaySeconds: 90
-            periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              port: 8080
-              path: /actuator/health/readiness
-            initialDelaySeconds: 15
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 10"]
-          resources:
-            limits:
-              memory: 1Gi
-          env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: kubernetes
-            - name: DATASOURCE_PASSWORD
-              value: DATASOURCE_PASSWORD_ENV
-            - name: DATASOURCE_URL
-              value: DATASOURCE_URL_ENV
-            - name: DATASOURCE_USERNAME
-              value: DATASOURCE_USERNAME_ENV
-          ports:
-            - containerPort: 8080
-      restartPolicy: Always
+    name: department-service
+    namespace: fireapp
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: department-service
+    strategy: {}
+    template:
+        metadata:
+            labels:
+                app: department-service
+        spec:
+            containers:
+                - image: REPOSITORY_PREFIX_ENV.azurecr.io/fireapp-department-ms:lastest
+                  name: department-service
+                  imagePullPolicy: Always
+                  livenessProbe:
+                      httpGet:
+                          port: 8080
+                          path: /actuator/health/liveness
+                      initialDelaySeconds: 90
+                      periodSeconds: 5
+                  readinessProbe:
+                      httpGet:
+                          port: 8080
+                          path: /actuator/health/readiness
+                      initialDelaySeconds: 15
+                  lifecycle:
+                      preStop:
+                          exec:
+                              command: ["sh", "-c", "sleep 10"]
+                  resources:
+                      requests:
+                          memory: 256Mi
+                      limits:
+                          memory: 1Gi
+                  env:
+                      - name: SPRING_PROFILES_ACTIVE
+                        value: kubernetes
+                      - name: DATASOURCE_PASSWORD
+                        value: DATASOURCE_PASSWORD_ENV
+                      - name: DATASOURCE_URL
+                        value: DATASOURCE_URL_ENV
+                      - name: DATASOURCE_USERNAME
+                        value: DATASOURCE_USERNAME_ENV
+                  ports:
+                      - containerPort: 8080
+            restartPolicy: Always
 status: {}
