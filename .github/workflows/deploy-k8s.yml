@@ -90,7 +90,7 @@ jobs:
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
         with:
-          namespace: fireapp
+          namespace: default
           name: department-example
           manifests: |
             k8s/namespace.yaml

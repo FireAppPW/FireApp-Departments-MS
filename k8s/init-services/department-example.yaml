@@ -5,7 +5,7 @@ metadata:
     labels:
         app: department-example
     name: department-example
-    namespace: fireapp
+    namespace: default
 spec:
     ports:
         - name: "http"
