@@ -2,9 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    labels:
-        app: department-example
-    name: department-example
+    name: department
     namespace: default
 spec:
     replicas: 1
