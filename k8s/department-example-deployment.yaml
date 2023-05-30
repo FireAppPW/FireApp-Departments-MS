@@ -3,19 +3,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     labels:
-        app: backend
+        App: backend
     name: department
     namespace: default
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: backend
+            App: backend
     strategy: {}
     template:
         metadata:
             labels:
-                app: backend
+                App: backend
         spec:
             containers:
                 - image: REPOSITORY_PREFIX_ENV.azurecr.io/fireapp-department-ms:lastest
