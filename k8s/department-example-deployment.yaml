@@ -19,7 +19,7 @@ spec:
         spec:
             containers:
                 - image: REPOSITORY_PREFIX_ENV.azurecr.io/fireapp-department-ms:lastest
-                  name: department-example
+                  name: department
                   imagePullPolicy: Always
                   livenessProbe:
                       httpGet:
