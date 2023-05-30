@@ -3,33 +3,33 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     labels:
-        app: department-service
-    name: department-service
+        app: department-example
+    name: department-example
     namespace: fireapp
 spec:
     replicas: 1
     selector:
         matchLabels:
-            app: department-service
+            app: department-example
     strategy: {}
     template:
         metadata:
             labels:
-                app: department-service
+                app: department-example
         spec:
             containers:
                 - image: REPOSITORY_PREFIX_ENV.azurecr.io/fireapp-department-ms:lastest
-                  name: department-service
+                  name: department-example
                   imagePullPolicy: Always
                   livenessProbe:
                       httpGet:
-                          port: 8080
+                          port: 8081
                           path: /actuator/health/liveness
                       initialDelaySeconds: 90
                       periodSeconds: 5
                   readinessProbe:
                       httpGet:
-                          port: 8080
+                          port: 8081
                           path: /actuator/health/readiness
                       initialDelaySeconds: 15
                   lifecycle:
@@ -51,6 +51,6 @@ spec:
                       - name: DATASOURCE_USERNAME
                         value: DATASOURCE_USERNAME_ENV
                   ports:
-                      - containerPort: 8080
+                      - containerPort: 8081
             restartPolicy: Always
 status: {}

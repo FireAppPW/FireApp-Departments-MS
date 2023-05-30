@@ -81,20 +81,20 @@ jobs:
           ESCAPED_DATASOURCE_USERNAME=$(echo $DATASOURCE_USERNAME | sed 's/\//\\\//g')
           ESCAPED_DATASOURCE_PASSWORD=$(echo $DATASOURCE_PASSWORD | sed 's/\//\\\//g')
           ESCAPED_REPOSITORY_PREFIX=$(echo $REPOSITORY_PREFIX | sed 's/\//\\\//g')
-          sed -i "s/DATASOURCE_URL_ENV/"$ESCAPED_DATASOURCE_URL"/g" ./k8s/department-service-deployment.yaml
-          sed -i "s/DATASOURCE_USERNAME_ENV/"$ESCAPED_DATASOURCE_USERNAME"/g" k8s/department-service-deployment.yaml
-          sed -i "s/DATASOURCE_PASSWORD_ENV/"$ESCAPED_DATASOURCE_PASSWORD"/g" k8s/department-service-deployment.yaml
-          sed -i "s/REPOSITORY_PREFIX_ENV/$ESCAPED_REPOSITORY_PREFIX/g" k8s/department-service-deployment.yaml
-          cat k8s/department-service-deployment.yaml
+          sed -i "s/DATASOURCE_URL_ENV/"$ESCAPED_DATASOURCE_URL"/g" ./k8s/department-example-deployment.yaml
+          sed -i "s/DATASOURCE_USERNAME_ENV/"$ESCAPED_DATASOURCE_USERNAME"/g" k8s/department-example-deployment.yaml
+          sed -i "s/DATASOURCE_PASSWORD_ENV/"$ESCAPED_DATASOURCE_PASSWORD"/g" k8s/department-example-deployment.yaml
+          sed -i "s/REPOSITORY_PREFIX_ENV/$ESCAPED_REPOSITORY_PREFIX/g" k8s/department-example-deployment.yaml
+          cat k8s/department-example-deployment.yaml
       - name: Deploy to AKS
         id: deploy-aks
         uses: Azure/k8s-deploy@v4
         with:
           namespace: fireapp
-          name: department-service
+          name: department-example
           manifests: |
             k8s/namespace.yaml
-            k8s/init-services/department-service.yaml
-            k8s/department-service-deployment.yaml
+            k8s/init-services/department-example.yaml
+            k8s/department-example-deployment.yaml
           images: ${{ env.REPOSITORY_PREFIX }}.azurecr.io/fireapp-department-ms:latest
           pull-images: false 
