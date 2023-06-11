@@ -1,5 +1,6 @@
 package pw.ersms.departments.department;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/department")
+@SecurityRequirement(name = "Bearer Authentication")
 public class DepartmentController {
     private final DepartmentService departmentService;
 
