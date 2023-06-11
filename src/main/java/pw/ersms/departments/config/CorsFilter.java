@@ -1,19 +1,16 @@
 package pw.ersms.departments.config;
 
-
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
 @Component
 public class CorsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
@@ -29,6 +26,5 @@ public class CorsFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }
