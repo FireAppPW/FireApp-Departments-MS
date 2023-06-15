@@ -64,8 +64,8 @@ public class DepartmentService {
     }
 
     public Object updateDepartment(Long id, @NotNull Department department) {
-        if (!departmentRepository.existsById(id))
-            throw new NoSuchElementException("Not found department with this id");
+        //if (!departmentRepository.existsById(id))
+        //    throw new NoSuchElementException("Not found department with this id");
         if (department.getName() == null || department.getName().isEmpty())
             throw new IllegalArgumentException("Name cannot be null or empty");
         if (department.getAddressLine1() == null || department.getAddressLine1().isEmpty())
