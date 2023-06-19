@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import static pw.ersms.departments.utils.Utils.response;
 
@@ -29,6 +30,12 @@ public class DepartmentService {
         List<DepartmentDto> departmentDto = departmentRepository.findAllExist()
                 .stream().map(this::convertToDto).toList();
         return response(departmentDto, "Successfully fetch all existing departments");
+    }
+
+    public List<Department> get(Integer departmentId){
+        return departmentRepository.findAll().stream()
+                .filter(department -> department.getId().equals(departmentId))
+                .collect(Collectors.toList());
     }
 
     public Object getDepartmentById(Long id) {
@@ -82,5 +89,9 @@ public class DepartmentService {
 
     public Object getAllDepartments() {
         return response(departmentRepository.findAll(), "Successfully fetch all departments");
+    }
+
+    public List<Department> get(){
+        return departmentRepository.findAll().stream().toList();
     }
 }
