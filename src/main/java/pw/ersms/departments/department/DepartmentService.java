@@ -32,7 +32,7 @@ public class DepartmentService {
         return response(departmentDto, "Successfully fetch all existing departments");
     }
 
-    public List<Department> get(Integer departmentId){
+    public List<Department> get(Long departmentId){
         return departmentRepository.findAll().stream()
                 .filter(department -> department.getId().equals(departmentId))
                 .collect(Collectors.toList());
