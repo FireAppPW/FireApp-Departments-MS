@@ -41,7 +41,7 @@ public class DepartmentController {
 
         //departmentId
         System.out.println(userDetails.getAuthorities().toArray()[0]);
-        Integer departmentId = Integer.parseInt(userDetails.getAuthorities().toArray()[0].toString());
+        Long departmentId = Long.parseLong(userDetails.getAuthorities().toArray()[0].toString());
 
         //role
         System.out.println(userDetails.getAuthorities().toArray()[1]);
