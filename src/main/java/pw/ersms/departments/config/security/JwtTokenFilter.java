@@ -59,12 +59,14 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         Claims claims = jwtUtil.parseClaims(token);
         String subject = (String) claims.get(Claims.SUBJECT);
         String role = (String) claims.get("roles");
+        String departmentId = jwtUtil.getDepartmentIdFromToken(token);
         System.out.println("roles: " + role);
 
         System.out.println("roleNames: " + role);
 
         ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role));
+        authorities.add(new SimpleGrantedAuthority(departmentId));
         String[] jwtSubject = subject.split(",");
 
         System.out.println("email: " + jwtSubject[1]);

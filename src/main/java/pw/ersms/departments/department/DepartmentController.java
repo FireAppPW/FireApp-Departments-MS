@@ -19,11 +19,6 @@ import java.util.List;
 public class DepartmentController {
     private final DepartmentService departmentService;
 
-    @GetMapping
-    public ResponseEntity<Object> getAllExistedDepartments() {
-        return ResponseEntity.ok(departmentService.getAllExistedDepartments());
-    }
-
     @GetMapping("/all")
     public ResponseEntity<Object> getAllDepartments() {
         return ResponseEntity.ok(departmentService.getAllDepartments());
