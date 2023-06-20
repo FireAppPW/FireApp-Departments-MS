@@ -43,4 +43,11 @@ public class JwtTokenUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String getDepartmentIdFromToken(String token) {
+        Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+        Integer departmentId = claims.get("departmentId", Integer.class);
+        //convert Integer to String
+        return String.valueOf(departmentId);
+    }
 }

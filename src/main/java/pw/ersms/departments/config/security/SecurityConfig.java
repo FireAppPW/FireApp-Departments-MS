@@ -23,23 +23,25 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         //allow all requests (even if the user doesnt have credentials)
-//        http
-//                .authorizeHttpRequests((authz) -> authz
-//                        .requestMatchers("/department/**").hasAnyAuthority("SysAdmin", "FireAdmin")
-//                        .anyRequest().permitAll()
-//                )
-//                .csrf().disable();
-//        http.exceptionHandling()
-//                .authenticationEntryPoint(
-//                        (request, response, ex) -> {
-//                            response.sendError(
-//                                    HttpServletResponse.SC_UNAUTHORIZED,
-//                                    ex.getMessage()
-//                            );
-//                        }
-//                );
-//
-//        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        /*
+        http
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/department/**").hasAnyAuthority("SysAdmin", "FireAdmin")
+                        .anyRequest().permitAll()
+                )
+
+                .csrf().disable();
+        http.exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, ex) -> {
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    ex.getMessage()
+                            );
+                        }
+                );
+
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);*/
 
         http
                 .csrf()
@@ -49,13 +51,21 @@ public class SecurityConfig{
                     corsCfg.applyPermitDefaultValues();
                     corsCfg.addAllowedOriginPattern("*");
                     corsCfg.addAllowedMethod(CorsConfiguration.ALL);
+                    corsCfg.addAllowedHeader(CorsConfiguration.ALL);
                     return corsCfg;
                 })
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/swagger-ui/**",
+                .requestMatchers(
+                        "/swagger-ui/**",
                         "/v3/api-docs/**")
                 .permitAll()
+                .requestMatchers(
+                        request -> request
+                                .getServletPath()
+                                .startsWith("/department")
+                )
+                .hasAnyAuthority("SysAdmin", "FireAdmin", "User")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -63,6 +73,17 @@ public class SecurityConfig{
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling()
+                .authenticationEntryPoint(
+                        (request, response, ex) -> {
+                            response.sendError(
+                                    HttpServletResponse.SC_UNAUTHORIZED,
+                                    ex.getMessage()
+                            );
+                        }
+                );
+
 
         return http.build();
     }
