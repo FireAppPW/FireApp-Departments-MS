@@ -57,6 +57,8 @@ spec:
                         value: DATASOURCE_URL_ENV
                       - name: DATASOURCE_USERNAME
                         value: DATASOURCE_USERNAME_ENV
+                      - name: JWT_SECRET
+                        VALUE: DATASOURCE_JWT_SECRET
                   ports:
                       - containerPort: 8081
             restartPolicy: Always
